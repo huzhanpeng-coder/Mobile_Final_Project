@@ -124,7 +124,6 @@ class GameViewController: UIViewController {
         Stay.isHidden = false
         
         startGame()
-        
     }
     
     func startGame(){
@@ -191,7 +190,7 @@ class GameViewController: UIViewController {
     @IBAction func Hit(_ sender: UIButton) {
         
         let alert = UIAlertController(title: "BURST", message: "You lost", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Re-start", style: UIAlertAction.Style.default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default, handler: { action in
             switch action.style{
                 case .default:
                     self.normalCounter=0
@@ -240,7 +239,7 @@ class GameViewController: UIViewController {
     @IBAction func Stay(_ sender: UIButton) {
         
         let alert2 = UIAlertController(title: "BURST", message: "Player Wins", preferredStyle: UIAlertController.Style.alert)
-        alert2.addAction(UIAlertAction(title: "Re-start", style: UIAlertAction.Style.default, handler: { action in
+        alert2.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default, handler: { action in
             switch action.style{
                 case .default:
                     self.normalCounter=0
@@ -264,7 +263,7 @@ class GameViewController: UIViewController {
         }))
         
         let alert3 = UIAlertController(title: "Sorry", message: "House Wins", preferredStyle: UIAlertController.Style.alert)
-        alert3.addAction(UIAlertAction(title: "Re-start", style: UIAlertAction.Style.default, handler: { action in
+        alert3.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default, handler: { action in
             switch action.style{
                 case .default:
                     self.normalCounter=0
@@ -295,7 +294,6 @@ class GameViewController: UIViewController {
 
         while (i < 5){
         
-        
         image2Views[normalCounter2].image = UIImage(named: myDeck[cardsCounter])
         houseCardvalue.append(Int(extractNumber(value: myDeck[cardsCounter]))!)
         normalCounter2 += 1
@@ -316,11 +314,8 @@ class GameViewController: UIViewController {
             self.present(alert3, animated: true, completion: nil)
         }
         
-        
-        i += 1
-            
+            i += 1
         }
-        
         
         self.HouseLabel.text = "House hand: " + String(sum2)
         

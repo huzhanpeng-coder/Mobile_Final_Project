@@ -305,8 +305,47 @@
                     <view key="view" contentMode="scaleToFill" id="Vyg-c4-lTp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name: Hu Zhanpeng" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AoI-fb-sn4">
+                                <rect key="frame" x="60" y="143" width="158" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="158" id="WiY-Sd-yIN"/>
+                                    <constraint firstAttribute="height" constant="21" id="h7u-8j-ezy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iOS Project" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znc-lr-G9B">
+                                <rect key="frame" x="60" y="189" width="86" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NSCC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SRP-eU-TqC">
+                                <rect key="frame" x="60" y="233" width="47" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="47" id="27t-fJ-mkn"/>
+                                    <constraint firstAttribute="height" constant="21" id="Ifa-y4-r3q"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="K1I-zp-raE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="SRP-eU-TqC" firstAttribute="top" secondItem="znc-lr-G9B" secondAttribute="bottom" constant="23" id="0bz-Pt-4bv"/>
+                            <constraint firstItem="K1I-zp-raE" firstAttribute="trailing" secondItem="SRP-eU-TqC" secondAttribute="trailing" constant="307" id="3oK-nQ-4LA"/>
+                            <constraint firstItem="AoI-fb-sn4" firstAttribute="leading" secondItem="znc-lr-G9B" secondAttribute="trailing" constant="-86" id="EuX-ih-rSz"/>
+                            <constraint firstItem="AoI-fb-sn4" firstAttribute="leading" secondItem="K1I-zp-raE" secondAttribute="leading" constant="60" id="Iwb-I8-ab8"/>
+                            <constraint firstItem="AoI-fb-sn4" firstAttribute="top" secondItem="K1I-zp-raE" secondAttribute="top" constant="99" id="RK4-1k-iyd"/>
+                            <constraint firstItem="SRP-eU-TqC" firstAttribute="leading" secondItem="K1I-zp-raE" secondAttribute="leading" constant="60" id="Swz-26-4cf"/>
+                            <constraint firstItem="K1I-zp-raE" firstAttribute="trailing" secondItem="AoI-fb-sn4" secondAttribute="trailing" constant="196" id="bdU-MK-bhe"/>
+                            <constraint firstItem="znc-lr-G9B" firstAttribute="top" secondItem="AoI-fb-sn4" secondAttribute="bottom" constant="25" id="i5C-TS-nKw"/>
+                            <constraint firstItem="K1I-zp-raE" firstAttribute="bottom" secondItem="SRP-eU-TqC" secondAttribute="bottom" constant="559" id="og3-Sr-54i"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Credits" image="pushpin-7" landscapeImage="pushpin-7" largeContentSizeImage="pushpin-7" selectedImage="pushpin-7" id="3FU-dR-FTt"/>
                 </viewController>
