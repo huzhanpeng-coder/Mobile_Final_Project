@@ -10,6 +10,8 @@ import SQLite3
 
 class GameViewController: UIViewController {
 
+    
+    
     @IBOutlet weak var card1: UIImageView!
     
     @IBOutlet weak var card2: UIImageView!
@@ -17,6 +19,29 @@ class GameViewController: UIViewController {
     @IBOutlet weak var card3: UIImageView!
     
     @IBOutlet weak var card4: UIImageView!
+    
+    
+    
+    @IBOutlet weak var smallCard: UIImageView!
+    
+    @IBOutlet weak var smallCard2: UIImageView!
+    
+    @IBOutlet weak var smallCard3: UIImageView!
+    
+    @IBOutlet weak var smallCard4: UIImageView!
+    
+    @IBOutlet weak var smallCard5: UIImageView!
+    
+    
+    @IBOutlet weak var smallCard6: UIImageView!
+    
+    @IBOutlet weak var smallCard7: UIImageView!
+    
+    @IBOutlet weak var smallCard8: UIImageView!
+    
+    @IBOutlet weak var smallCard9: UIImageView!
+    
+    @IBOutlet weak var smallCard10: UIImageView!
     
     @IBOutlet weak var Start: UIButton!
     
@@ -28,6 +53,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var HouseLabel: UILabel!
     
     var playerName = ""
+    var playerScore = ""
     var myDeck: [String] = []
     var counterHouse = 0
     var counterPlayer = 0
@@ -36,9 +62,27 @@ class GameViewController: UIViewController {
     var cardsCounter = 0
     var flag = true
     var db: OpaquePointer?
+    var imageViews = [UIImageView]()
+    var image2Views = [UIImageView]()
+    var normalCounter = 0
+    var normalCounter2 = 0
+    var sum = 0
+    var sum2 = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        imageViews.append(smallCard)
+        imageViews.append(smallCard2)
+        imageViews.append(smallCard3)
+        imageViews.append(smallCard4)
+        imageViews.append(smallCard5)
+        
+        image2Views.append(smallCard6)
+        image2Views.append(smallCard7)
+        image2Views.append(smallCard8)
+        image2Views.append(smallCard9)
+        image2Views.append(smallCard10)
         
         let fileUrl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("project.sqlite")
         
@@ -73,6 +117,16 @@ class GameViewController: UIViewController {
        
     @IBAction func Start(_ sender: UIButton) {
         
+        Start.isHidden = true
+        Hit.isHidden = false
+        Stay.isHidden = false
+        
+        startGame()
+        
+    }
+    
+    func startGame(){
+        
         let selectStatement = "SELECT * FROM TABLENAMES ORDER BY id DESC;"
         
         var text = ""
@@ -99,11 +153,14 @@ class GameViewController: UIViewController {
             print("\nQuery is not prepared \(errorMessage)")
           }
           
-          sqlite3_finalize(queryStatement)
+        sqlite3_finalize(queryStatement)
         
-        Start.isHidden = true
-        Hit.isHidden = false
-        Stay.isHidden = false
+        sum = 0
+        sum2 = 0
+        playerCardvalue = []
+        houseCardvalue = []
+        
+        cardsCounter = 0
         
         myDeck.shuffle()
         card1.image = UIImage(named: myDeck[cardsCounter])
@@ -113,8 +170,7 @@ class GameViewController: UIViewController {
         card2.image = UIImage(named: myDeck[cardsCounter])
         playerCardvalue.append(Int(extractNumber(value: myDeck[cardsCounter]))!)
         
-        let sum = playerCardvalue.reduce(0, +)
-        self.PlayerLabel.text = text + " current hand: " + String(sum)
+        sum = playerCardvalue.reduce(0, +)
                 
         cardsCounter += 1
         card3.image = UIImage(named: myDeck[cardsCounter])
@@ -124,32 +180,57 @@ class GameViewController: UIViewController {
         card4.image = UIImage(named: myDeck[cardsCounter])
         houseCardvalue.append(Int(extractNumber(value: myDeck[cardsCounter]))!)
         
-        let sum2 = houseCardvalue.reduce(0, +)
-        self.HouseLabel.text = " House current hand: " + String(sum2)
+        sum2 = houseCardvalue.reduce(0, +)
         
+        self.PlayerLabel.text = text + " hand: " + String(sum)
+        self.HouseLabel.text = "House hand: " + String(sum2)
     }
     
     
-    
     @IBAction func Hit(_ sender: UIButton) {
-        let card = UIImageView()
-        var sum = playerCardvalue.reduce(0, +)
+        
+        let alert = UIAlertController(title: "BURST", message: "You lost", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Re-start", style: UIAlertAction.Style.default, handler: { action in
+            switch action.style{
+                case .default:
+                    self.normalCounter=0
+                    self.normalCounter2=0
+                    self.flag=true
+                    for v in self.imageViews {
+                        v.image=nil
+                    }
+                    for v in self.image2Views {
+                        v.image=nil
+                    }
+                    self.startGame()
+                    
+                case .cancel:
+                print("cancel")
+                
+                case .destructive:
+                print("destructive")
+                
+            }
+        }))
+        
+        
+        sum = playerCardvalue.reduce(0, +)
         
         if flag == true {
-            card.frame = CGRect(x: 50 + (counterHouse*50), y: 250, width: 80, height: 100)
+            
             cardsCounter += 1
-            card.image = UIImage(named: myDeck[cardsCounter])
+            imageViews[normalCounter].image = UIImage(named: myDeck[cardsCounter])
             playerCardvalue.append(Int(extractNumber(value: myDeck[cardsCounter]))!)
             counterHouse += 1
-                
-            view.addSubview(card)
+            normalCounter += 1
             
             sum = playerCardvalue.reduce(0, +)
+            
             if (sum > 21){
-                print("player burst ")
+                
+                self.present(alert, animated: true, completion: nil)
             }
         }
-        
         
         self.PlayerLabel.text = "Player Score: " + String(sum)
     }
@@ -157,23 +238,78 @@ class GameViewController: UIViewController {
     
     @IBAction func Stay(_ sender: UIButton) {
         
+        let alert2 = UIAlertController(title: "BURST", message: "Player Wins", preferredStyle: UIAlertController.Style.alert)
+        alert2.addAction(UIAlertAction(title: "Re-start", style: UIAlertAction.Style.default, handler: { action in
+            switch action.style{
+                case .default:
+                    self.normalCounter=0
+                    self.normalCounter2=0
+                    self.flag=true
+                    for v in self.imageViews {
+                        v.image=nil
+                    }
+                    for v in self.image2Views {
+                        v.image=nil
+                    }
+                    self.startGame()
+                    
+                case .cancel:
+                print("cancel")
+                
+                case .destructive:
+                print("destructive")
+                
+            }
+        }))
+        
+        let alert3 = UIAlertController(title: "Sorry", message: "House Wins", preferredStyle: UIAlertController.Style.alert)
+        alert3.addAction(UIAlertAction(title: "Re-start", style: UIAlertAction.Style.default, handler: { action in
+            switch action.style{
+                case .default:
+                    self.normalCounter=0
+                    self.normalCounter2=0
+                    self.flag=true
+                    for v in self.imageViews {
+                        v.image=nil
+                    }
+                    for v in self.image2Views {
+                        v.image=nil
+                    }
+                    
+                    self.startGame()
+                    
+                case .cancel:
+                print("cancel")
+                
+                case .destructive:
+                print("destructive")
+                
+            }
+        }))
+        
         flag = false
         var i = 0
-        var sum2 = houseCardvalue.reduce(0, +)
+        sum2 = houseCardvalue.reduce(0, +)
         
         while (i <= 5){
             
-        let card = UIImageView()
-        card.frame = CGRect(x: 50 + (counterPlayer*50), y: 700, width: 80, height: 100)
-        card.image = UIImage(named: myDeck[cardsCounter])
+        image2Views[normalCounter2].image = UIImage(named: myDeck[cardsCounter])
         houseCardvalue.append(Int(extractNumber(value: myDeck[cardsCounter]))!)
         cardsCounter += 1
         counterPlayer += 1
         sum2 = houseCardvalue.reduce(0, +)
-        if (sum2 > 21){
-            i=5
+            
+        print(houseCardvalue)
+        if (sum2>21){
+            i=5;
+            self.present(alert2, animated: true, completion: nil)
         }
-        view.addSubview(card)
+        if (sum2 > sum && sum2 < 21){
+            i=5;
+            self.present(alert3, animated: true, completion: nil)
+        }
+        
+        
         i += 1
             
         }

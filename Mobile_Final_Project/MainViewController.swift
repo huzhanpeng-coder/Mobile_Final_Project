@@ -12,6 +12,8 @@ class MainViewController: UIViewController {
 
     @IBOutlet weak var playerName: UITextField!
     
+    
+    
     var db: OpaquePointer?
     
     var name = ""
