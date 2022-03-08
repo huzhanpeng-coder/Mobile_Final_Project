@@ -52,11 +52,12 @@ class GameViewController: UIViewController {
     @IBOutlet weak var PlayerLabel: UILabel!
     @IBOutlet weak var HouseLabel: UILabel!
     
+    @IBOutlet weak var ScoreLabel: UILabel!
+    
     var playerName = ""
-    var playerScore = ""
+    var playerScore = 0
     var myDeck: [String] = []
-    var counterHouse = 0
-    var counterPlayer = 0
+    
     var playerCardvalue: [Int] = []
     var houseCardvalue: [Int] = []
     var cardsCounter = 0
@@ -68,6 +69,7 @@ class GameViewController: UIViewController {
     var normalCounter2 = 0
     var sum = 0
     var sum2 = 0
+    var text = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -129,7 +131,6 @@ class GameViewController: UIViewController {
         
         let selectStatement = "SELECT * FROM TABLENAMES ORDER BY id DESC;"
         
-        var text = ""
         var queryStatement: OpaquePointer?
           
           if sqlite3_prepare_v2(db, selectStatement, -1, &queryStatement, nil) ==
@@ -221,18 +222,17 @@ class GameViewController: UIViewController {
             cardsCounter += 1
             imageViews[normalCounter].image = UIImage(named: myDeck[cardsCounter])
             playerCardvalue.append(Int(extractNumber(value: myDeck[cardsCounter]))!)
-            counterHouse += 1
             normalCounter += 1
             
             sum = playerCardvalue.reduce(0, +)
             
             if (sum > 21){
-                
+                playerScore -= 50
                 self.present(alert, animated: true, completion: nil)
             }
         }
         
-        self.PlayerLabel.text = "Player Score: " + String(sum)
+        self.PlayerLabel.text = text + " hand: " + String(sum)
     }
     
     
@@ -291,12 +291,14 @@ class GameViewController: UIViewController {
         var i = 0
         sum2 = houseCardvalue.reduce(0, +)
         
-        while (i <= 5){
-            
+
+        while (i < 5){
+        
+        
         image2Views[normalCounter2].image = UIImage(named: myDeck[cardsCounter])
         houseCardvalue.append(Int(extractNumber(value: myDeck[cardsCounter]))!)
+        normalCounter2 += 1
         cardsCounter += 1
-        counterPlayer += 1
         sum2 = houseCardvalue.reduce(0, +)
             
         print(houseCardvalue)
@@ -315,7 +317,7 @@ class GameViewController: UIViewController {
         }
         
         
-        self.HouseLabel.text = "House Score: " + String(sum2)
+        self.HouseLabel.text = "House hand: " + String(sum2)
         
     }
     
