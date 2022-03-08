@@ -228,6 +228,7 @@ class GameViewController: UIViewController {
             
             if (sum > 21){
                 playerScore -= 50
+                ScoreLabel.text = "Score: " + String(playerScore)
                 self.present(alert, animated: true, completion: nil)
             }
         }
@@ -304,10 +305,14 @@ class GameViewController: UIViewController {
         print(houseCardvalue)
         if (sum2>21){
             i=5;
+            playerScore += 50
+            ScoreLabel.text = "Score: " + String(playerScore)
             self.present(alert2, animated: true, completion: nil)
         }
         if (sum2 > sum && sum2 < 21){
             i=5;
+            playerScore -= 50
+            ScoreLabel.text = "Score: " + String(playerScore)
             self.present(alert3, animated: true, completion: nil)
         }
         
